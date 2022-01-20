@@ -9,9 +9,5 @@
     <ProjectReference Include="..\Gestao.Data\Gestao.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 
 </Project>
