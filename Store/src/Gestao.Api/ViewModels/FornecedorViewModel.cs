@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Gestao.Api.ViewModels
@@ -18,10 +19,10 @@ namespace Gestao.Api.ViewModels
 
         public int TipoFornecedor { get; set; }
 
-        //public EnderecoViewModel Endereco { get; set; }
+        public EnderecoViewModel Endereco { get; set; }
 
         public bool Ativo { get; set; }
 
-        //public IEnumerable<ProdutoViewModel> Produtos { get; set; }
+        public IEnumerable<ProdutoViewModel> Produtos { get; set; }
     }
 }
