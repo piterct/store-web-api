@@ -35,7 +35,9 @@ namespace Gestao.Api
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers();
+            services.AddControllersWithViews()
+            .AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.ResolveDependencies();
         }
