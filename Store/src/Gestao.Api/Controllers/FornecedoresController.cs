@@ -55,7 +55,7 @@ namespace Gestao.Api.Controllers
             return Ok(fornecedor);
         }
 
-        [HttpPut("id:guid")]
+        [HttpPut("{id:guid}")]
         public async Task<ActionResult> Atualizar(Guid id, FornecedorViewModel fornecedorViewModel)
         {
             if(id != fornecedorViewModel.Id) return BadRequest();
@@ -70,7 +70,7 @@ namespace Gestao.Api.Controllers
             return Ok(fornecedor);
         }
 
-        [HttpDelete("id:guid")]
+        [HttpDelete("{id:guid}")]
         public async Task<ActionResult<FornecedorViewModel>> Excluir(Guid id)
         {
             var fornecedor = await ObterFornecedorEndereco(id);

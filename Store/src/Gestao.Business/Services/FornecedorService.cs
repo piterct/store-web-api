@@ -65,6 +65,11 @@ namespace Gestao.Business.Services
                 return false;
             }
 
+            var enderecoFornecedor = await _enderecoRepository.ObterEnderecoPorFornecedor(id);
+
+            if (enderecoFornecedor != null && enderecoFornecedor.FornecedorId == id)
+                await _enderecoRepository.Remover(enderecoFornecedor.Id);
+
             await _fornecedorRepository.Remover(id);
 
             return true;
