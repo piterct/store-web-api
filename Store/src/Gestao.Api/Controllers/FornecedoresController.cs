@@ -15,12 +15,14 @@ namespace Gestao.Api.Controllers
         private readonly IFornecedorRepository _fornecedorRepository;
         private readonly IMapper _mapper;
         private readonly IFornecedorService _fornecedorService;
+        private readonly IEnderecoRepository _enderecoRepository;
 
 
         public FornecedoresController(IFornecedorRepository fornecedorRepository,
                                        IMapper mapper,
                                        IFornecedorService fornecedorService,
-                                       INotificador notificador) : base(notificador)
+                                       INotificador notificador,
+                                       IEnderecoRepository enderecoRepository) : base(notificador)
         {
             _fornecedorRepository = fornecedorRepository;
             _mapper = mapper;
@@ -79,6 +81,14 @@ namespace Gestao.Api.Controllers
             await _fornecedorService.Remover(id);
 
             return CustomResponse(fornecedorViewModel);
+        }
+
+
+        [HttpGet("obter-endereco/{id:guid}")]
+        public async Task<EnderecoViewModel> ObterEnderecoPorId(Guid id)
+        {
+            var enderecoViewModel = _mapper.Map<EnderecoViewModel>(await _enderecoRepository.ObterPorId(id));
+            return enderecoViewModel;
         }
 
         public async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id)
