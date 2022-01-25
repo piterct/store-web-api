@@ -27,6 +27,7 @@ namespace Gestao.Api.Controllers
             _fornecedorRepository = fornecedorRepository;
             _mapper = mapper;
             _fornecedorService = fornecedorService;
+            _enderecoRepository = enderecoRepository;
         }
         [HttpGet]
         public async Task<IEnumerable<FornecedorViewModel>> ObterTodos()
