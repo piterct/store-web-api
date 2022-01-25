@@ -2,6 +2,7 @@
 using Gestao.Business.Models;
 using Gestao.Business.Models.Validations;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Gestao.Business.Services
@@ -20,6 +21,13 @@ namespace Gestao.Business.Services
         public async Task Adicionar(Produto produto)
         {
             if (!ExecutarValidacao(new ProdutoValidation(), produto)) return;
+
+
+            if (_produtoRepository.Buscar(p => p.Id == produto.Id).Result.Any())
+            {
+                Notificar("Já existe um produto com este id informado");
+                return;
+            }
 
             await _produtoRepository.Adicionar(produto);
         }

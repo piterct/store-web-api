@@ -47,6 +47,13 @@ namespace Gestao.Api.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
+            var imagemNome = Guid.NewGuid() + "_" + produtoViewModel.Imagem;
+            if(!UploadArquivo(produtoViewModel.ImagemUpload, imagemNome))
+            {
+                return CustomResponse(produtoViewModel);
+            }
+
+            produtoViewModel.Imagem = imagemNome;
             await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
 
             return CustomResponse(produtoViewModel);
@@ -68,9 +75,9 @@ namespace Gestao.Api.Controllers
         {
             var imageDataByteArray = Convert.FromBase64String(arquivo);
 
-            if (arquivo == null || arquivo.Length == 0)
+            if (string.IsNullOrEmpty(arquivo))
             {
-                ModelState.AddModelError(string.Empty, "Forneça uma imagem para este produto!");
+                NotificarErro("Forneça uma imagem para este produto!");
                 return false;
             }
 
@@ -78,7 +85,7 @@ namespace Gestao.Api.Controllers
 
             if (System.IO.File.Exists(filePath))
             {
-                ModelState.AddModelError(string.Empty, "Já existe um arquivo com este nome!");
+                NotificarErro("Já existe um arquivo com este nome!");
                 return false;
             }
 
