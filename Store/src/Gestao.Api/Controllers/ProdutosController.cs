@@ -61,21 +61,29 @@ namespace Gestao.Api.Controllers
         }
 
 
-        [HttpPost("Adicionar")]
+        [HttpPost("adicionar")]
         public async Task<ActionResult<ProdutoViewModel>> AdicionarAlternativo(ProdutoImagemViewModel produtoViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var imgPrefixo = Guid.NewGuid() + "_";
-            if (!UploadArquivo(produtoViewModel.ImagemUpload, imagemNome))
+            if (!await UploadArquivoAlternativo(produtoViewModel.ImagemUpload, imgPrefixo))
             {
-                return CustomResponse(produtoViewModel);
+                return CustomResponse(ModelState);
             }
 
-            produtoViewModel.Imagem = imagemNome;
+            produtoViewModel.Imagem = imgPrefixo + produtoViewModel.ImagemUpload.FileName;
             await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
 
             return CustomResponse(produtoViewModel);
+        }
+
+        [RequestSizeLimit(40000000)]
+        //[DisableRequestSizeLimit]
+        [HttpPost("imagem")]
+        public async Task<ActionResult> AdicionarImagem(IFormFile file)
+        {
+            return Ok(file);
         }
 
         [HttpDelete("{id:guid}")]
