@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Gestao.Api.Extensions;
 using Gestao.Api.ViewModels;
 using Gestao.Business.Interfaces;
 using Gestao.Business.Models;
@@ -62,7 +63,9 @@ namespace Gestao.Api.Controllers
 
 
         [HttpPost("adicionar")]
-        public async Task<ActionResult<ProdutoViewModel>> AdicionarAlternativo(ProdutoImagemViewModel produtoViewModel)
+        public async Task<ActionResult<ProdutoViewModel>> AdicionarAlternativo(
+             [ModelBinder(BinderType = typeof(ProdutoModelBinder))]
+            ProdutoImagemViewModel produtoViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
