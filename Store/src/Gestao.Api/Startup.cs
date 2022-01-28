@@ -29,22 +29,7 @@ namespace Gestao.Api
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllersWithViews()
-            .AddNewtonsoftJson(options =>
-            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
-            services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
-            });
-
-            services.AddCors(options =>
-                options.AddPolicy("Development",
-                builder => builder.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-
-            ));
+            services.WebApiConfig();
 
             services.ResolveDependencies();
         }
@@ -56,19 +41,13 @@ namespace Gestao.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCors("Development");
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-           // app.UseAuthorization();
-          
-            app.UseEndpoints(endpoints =>
+            else
             {
-                endpoints.MapControllers();
-            });
+                app.UseHsts();
+            }
+
+            app.UseMvcConfiguration();
+         
         }
     }
 }
