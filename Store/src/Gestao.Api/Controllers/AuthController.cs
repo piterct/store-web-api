@@ -45,5 +45,26 @@ namespace Gestao.Api.Controllers
 
             return CustomResponse();
         }
+
+        [HttpPost("entrar")]
+        public async Task<ActionResult> Login(LoginUserViewModel loginUser)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, true);
+
+            if (result.Succeeded)
+            {
+                return CustomResponse(loginUser);
+            }
+            if (result.IsLockedOut)
+            {
+                NotificarErro("Usuario temporariamente bloqueado por tentativas inválidas");
+                return CustomResponse(loginUser);
+            }
+
+            NotificarErro("Usuário ou Senha incorretos");
+            return CustomResponse(loginUser);
+        }
     }
 }
