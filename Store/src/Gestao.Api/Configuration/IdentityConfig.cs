@@ -1,4 +1,5 @@
-﻿using Gestao.Data.Context;
+﻿using Gestao.Api.Data;
+using Gestao.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
