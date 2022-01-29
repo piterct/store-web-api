@@ -36,7 +36,6 @@ namespace Gestao.Api.Configuration
             app.UseCors("Development");
             app.UseRouting();
             app.UseAuthorization();
-            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
