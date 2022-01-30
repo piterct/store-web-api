@@ -27,14 +27,14 @@ namespace Gestao.Api.Controllers
             {
                 return Ok(new
                 {
-                    succes = true,
+                    success = true,
                     data = result
                 });
             }
 
             return BadRequest(new
             {
-                succes = false,
+                success = false,
                 erros = _notificador.ObterNotificacoes().Select(n => n.Mensagem)
             });
         }
