@@ -3,6 +3,7 @@ using Gestao.Api.Extensions;
 using Gestao.Api.ViewModels;
 using Gestao.Business.Interfaces;
 using Gestao.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Gestao.Api.Controllers
 {
+    [Authorize]
     [Route("api/produtos")]
     public class ProdutosController : MainController
     {
@@ -44,6 +46,7 @@ namespace Gestao.Api.Controllers
             return produtoViewModel;
         }
 
+        [ClaimsAuthorize("Produto", "Adicionar")]
         [HttpPost]
         public async Task<ActionResult<ProdutoViewModel>> Adicionar(ProdutoViewModel produtoViewModel)
         {
@@ -61,7 +64,7 @@ namespace Gestao.Api.Controllers
             return CustomResponse(produtoViewModel);
         }
 
-
+        [ClaimsAuthorize("Produto", "Adicionar")]
         [HttpPost("adicionar")]
         public async Task<ActionResult<ProdutoViewModel>> AdicionarAlternativo(
              [ModelBinder(BinderType = typeof(ProdutoModelBinder))]
@@ -89,6 +92,7 @@ namespace Gestao.Api.Controllers
             return Ok(file);
         }
 
+        [ClaimsAuthorize("Produto", "Editar")]
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Atualizar(Guid id, ProdutoViewModel produtoViewModel)
         {
@@ -127,6 +131,7 @@ namespace Gestao.Api.Controllers
             return CustomResponse(produtoViewModel);
         }
 
+        [ClaimsAuthorize("Produto", "Remover")]
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ProdutoViewModel>> Excluir(Guid id)
         {
