@@ -20,7 +20,7 @@ namespace Gestao.Api.Controllers
                                IUser appUser)
         {
             _notificador = notificador;
-            appUser = AppUser;
+            AppUser = appUser;
 
             if (appUser.IsAuthenticated())
             {
