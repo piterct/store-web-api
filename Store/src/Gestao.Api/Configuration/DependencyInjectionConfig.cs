@@ -1,8 +1,10 @@
-﻿using Gestao.Business.Interfaces;
+﻿using Gestao.Api.Extensions;
+using Gestao.Business.Interfaces;
 using Gestao.Business.Notificacoes;
 using Gestao.Business.Services;
 using Gestao.Data.Context;
 using Gestao.Data.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Gestao.Api.Configuration
@@ -19,6 +21,9 @@ namespace Gestao.Api.Configuration
             services.AddScoped<INotificador, Notificador>();
             services.AddScoped<IFornecedorService, FornecedorService>();
             services.AddScoped<IProdutoService, ProdutoService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUser, AspNetUser>();
 
             return services;
         }
