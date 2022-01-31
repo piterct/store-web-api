@@ -25,7 +25,8 @@ namespace Gestao.Api.Controllers
                                        IMapper mapper,
                                        IFornecedorService fornecedorService,
                                        INotificador notificador,
-                                       IEnderecoRepository enderecoRepository) : base(notificador)
+                                       IEnderecoRepository enderecoRepository,
+                                       IUser user) : base(notificador, user)
         {
             _fornecedorRepository = fornecedorRepository;
             _mapper = mapper;
@@ -50,7 +51,7 @@ namespace Gestao.Api.Controllers
             return fornecedor;
         }
 
-        [ClaimsAuthorize("Fornecedor","Adicionar")]
+        [ClaimsAuthorize("Fornecedor", "Adicionar")]
         [HttpPost]
         public async Task<ActionResult> Adicionar(FornecedorViewModel fornecedorViewModel)
         {
