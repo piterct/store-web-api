@@ -41,16 +41,18 @@ namespace Gestao.Api
         {
             if (env.IsDevelopment())
             {
+                app.UseCors("Development");
                 app.UseDeveloperExceptionPage();
             }
             else
             {
+                app.UseCors("Production");
                 app.UseHsts();
             }
 
             app.UseAuthentication();
             app.UseMvcConfiguration();
-         
+
         }
     }
 }
