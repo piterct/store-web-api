@@ -19,9 +19,10 @@ namespace Gestao.Api.Configuration
                 options.ReportApiVersions = true;
             });
 
-            services.AddVersionedApiExplorer(services =>
+            services.AddVersionedApiExplorer(options =>
             {
-
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
             });
 
             services.Configure<ApiBehaviorOptions>(options =>
