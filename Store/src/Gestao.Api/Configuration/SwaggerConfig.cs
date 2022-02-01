@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -43,10 +44,14 @@ namespace Gestao.Api.Configuration
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            if (operation.Parameters == null)
-            {
-                return;
-            }
+            var apiVersionMetadata = context
+                .ApiDescription
+                .ActionDescriptor
+                .EndpointMetadata
+                .OfType<ApiVersionAttribute>().FirstOrDefault();
+
+            if (apiVersionMetadata != null)
+                operation.Deprecated = apiVersionMetadata.Deprecated;
 
             foreach (var parameter in operation.Parameters)
             {
