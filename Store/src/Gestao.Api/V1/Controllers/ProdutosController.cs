@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Gestao.Api.Controllers;
 using Gestao.Api.Extensions;
 using Gestao.Api.ViewModels;
 using Gestao.Business.Interfaces;
@@ -11,10 +12,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Gestao.Api.Controllers
+namespace Gestao.Api.V1.Controllers
 {
     [Authorize]
-    [Route("api/produtos")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/produtos")]
     public class ProdutosController : MainController
     {
         private readonly IProdutoRepository _produtoRepository;

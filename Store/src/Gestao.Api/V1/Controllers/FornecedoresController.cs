@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Gestao.Api.Controllers;
 using Gestao.Api.Extensions;
 using Gestao.Api.ViewModels;
 using Gestao.Business.Interfaces;
@@ -9,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Gestao.Api.Controllers
+namespace Gestao.Api.V1.Controllers
 {
     [Authorize]
     [ApiVersion("1.0")]
