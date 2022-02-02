@@ -12,7 +12,7 @@ namespace Gestao.Api.V1.Controllers
         private readonly ILogger _logger;
         public TesteController(INotificador notificador, 
                                 IUser appUser,
-                                ILogger logger) : base(notificador, appUser)
+                                ILogger<TesteController> logger) : base(notificador, appUser)
         {
             _logger = logger;
         }
