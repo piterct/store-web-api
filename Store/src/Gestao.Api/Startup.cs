@@ -35,7 +35,7 @@ namespace Gestao.Api
 
             services.AddSwaggerConfig();
 
-            services.AddLogging();
+            services.AddLoggingConfiguration();
 
             services.ResolveDependencies();
         }
