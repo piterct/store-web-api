@@ -1,4 +1,5 @@
 using Gestao.Api.Configuration;
+using Gestao.Api.Extensions;
 using Gestao.Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -55,6 +56,9 @@ namespace Gestao.Api
             }
 
             app.UseAuthentication();
+
+            app.UseMiddleware<ExceptionMiddleware>();
+
             app.UseMvcConfiguration();
 
             app.UseSwaggerConfig(provider);
