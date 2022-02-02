@@ -20,11 +20,6 @@ namespace Gestao.Api.Configuration
             {
                 c.OperationFilter<SwaggerDefaultValues>();
 
-                var security = new Dictionary<string, IEnumerable<string>>
-                {
-                    {"Bearer", new string[] { } }
-                };
-
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "Insira o token JWT desta maneira: Bearer {seu token}",
@@ -33,6 +28,21 @@ namespace Gestao.Api.Configuration
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
                 });
 
             });
