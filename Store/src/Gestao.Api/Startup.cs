@@ -35,6 +35,8 @@ namespace Gestao.Api
 
             services.AddSwaggerConfig();
 
+            services.AddLogging();
+
             services.ResolveDependencies();
         }
 
@@ -56,6 +58,8 @@ namespace Gestao.Api
             app.UseMvcConfiguration();
 
             app.UseSwaggerConfig(provider);
+
+            app.UseLoggingConfiguration();
 
         }
     }
