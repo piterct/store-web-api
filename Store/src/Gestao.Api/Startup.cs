@@ -1,7 +1,9 @@
 using Gestao.Api.Configuration;
 using Gestao.Api.Extensions;
 using Gestao.Data.Context;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
@@ -35,12 +37,15 @@ namespace Gestao.Api
             services.WebApiConfig();
 
             services.AddSwaggerConfig();
-                
+
 
             services.AddLoggingConfiguration();
 
             services.AddHealthChecks()
                 .AddSqlServer(Configuration.GetConnectionString("DefaultConnection"), name: "BancoSQL");
+
+            services.AddHealthChecksUI()
+                 .AddSqlServerStorage(Configuration.GetConnectionString("DefaultConnection")); ;
 
             services.ResolveDependencies();
         }
@@ -69,7 +74,21 @@ namespace Gestao.Api
 
             app.UseLoggingConfiguration();
 
-            app.UseHealthChecks("/hc");
+            app.UseHealthChecks("/api/hc", new HealthCheckOptions
+            {
+                Predicate = _=> true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+
+            app.UseHealthChecksUI(options => 
+            { 
+                options.UIPath = "/api/hc-ui";
+                options.ResourcesPath = $"{options.UIPath}/resources";
+                options.UseRelativeApiPath = false;
+                options.UseRelativeResourcesPath = false;
+                options.UseRelativeWebhookPath = false;
+
+            });
 
         }
     }
