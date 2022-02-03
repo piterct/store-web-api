@@ -39,13 +39,9 @@ namespace Gestao.Api
             services.AddSwaggerConfig();
 
 
-            services.AddLoggingConfiguration();
+            services.AddLoggingConfiguration(Configuration);
 
-            services.AddHealthChecks()
-                .AddSqlServer(Configuration.GetConnectionString("DefaultConnection"), name: "BancoSQL");
-
-            services.AddHealthChecksUI()
-                 .AddSqlServerStorage(Configuration.GetConnectionString("DefaultConnection")); ;
+           
 
             services.ResolveDependencies();
         }
@@ -74,21 +70,7 @@ namespace Gestao.Api
 
             app.UseLoggingConfiguration();
 
-            app.UseHealthChecks("/api/hc", new HealthCheckOptions
-            {
-                Predicate = _=> true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            });
-
-            app.UseHealthChecksUI(options => 
-            { 
-                options.UIPath = "/api/hc-ui";
-                options.ResourcesPath = $"{options.UIPath}/resources";
-                options.UseRelativeApiPath = false;
-                options.UseRelativeResourcesPath = false;
-                options.UseRelativeWebhookPath = false;
-
-            });
+           
 
         }
     }
