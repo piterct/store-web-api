@@ -35,8 +35,12 @@ namespace Gestao.Api
             services.WebApiConfig();
 
             services.AddSwaggerConfig();
+                
 
             services.AddLoggingConfiguration();
+
+            services.AddHealthChecks()
+                .AddSqlServer(Configuration.GetConnectionString("DefaultConnection"), name: "BancoSQL");
 
             services.ResolveDependencies();
         }
@@ -64,6 +68,8 @@ namespace Gestao.Api
             app.UseSwaggerConfig(provider);
 
             app.UseLoggingConfiguration();
+
+            app.UseHealthChecks("/hc");
 
         }
     }
