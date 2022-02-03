@@ -23,9 +23,10 @@ namespace Gestao.Api.Configuration
             services.AddHealthChecks()
                //.AddElmahIoPublisher(options =>
                //{
-               //    options.ApiKey = "ApiKey";  Inclusao ApiKey DO ElmahIo
+               //    options.ApiKey = "ApiKey"; Inclusao ApiKey DO ElmahIo
                //    options.LogId = new Guid(); Inclusao LogId DO ElmahIo
                //    options.HeartbeatId = "HeartbeatId";
+               //    options.Application = "API Fornecedores e Produtos";
 
                //})
                .AddCheck("Produtos", new SqlServerHealthCheck(configuration.GetConnectionString("DefaultConnection")))
