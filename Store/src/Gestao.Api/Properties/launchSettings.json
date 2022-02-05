@@ -30,7 +30,7 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Prodution"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
     "Gestao.Api": {
