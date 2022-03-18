@@ -7,10 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.OpenSsl;
+using Org.BouncyCastle.Security;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -130,6 +136,32 @@ namespace Gestao.Api.V1.Controllers
             };
 
             return response;
+        }
+
+        private string CreateJwtToken(string pathPrivateKey)
+        {
+            RSAParameters rsaParameters = DotNetUtilities.ToRSAParameters((RsaPrivateCrtKeyParameters)(new PemReader((TextReader)new StreamReader(pathPrivateKey)).ReadObject()
+                ?? "Certificado/Chave '" + pathPrivateKey + "' inválido(a)."));
+            RSACryptoServiceProvider cryptoServiceProvider = new RSACryptoServiceProvider();
+            cryptoServiceProvider.ImportParameters(rsaParameters);
+            RsaSecurityKey key = new RsaSecurityKey((RSA)cryptoServiceProvider);
+            DateTime utcNow = DateTime.UtcNow;
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity((IEnumerable<Claim>)new List<Claim>()
+                {
+                  new Claim("scope", "*")
+                }, "Custom");
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Audience = "Your Audience",
+                Issuer = "Your Issuer",
+                Subject = claimsIdentity,
+                Expires = new DateTime?(DateTime.UtcNow.AddHours(1)),
+                IssuedAt = new DateTime?(DateTime.UtcNow),
+                SigningCredentials = new SigningCredentials((SecurityKey)key, "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256", "http://www.w3.org/2001/04/xmlenc#sha256")
+            };
+            JwtSecurityTokenHandler securityTokenHandler = new JwtSecurityTokenHandler();
+            securityTokenHandler.SetDefaultTimesOnTokenCreation = false;
+            return securityTokenHandler.WriteToken(securityTokenHandler.CreateToken(tokenDescriptor));
         }
 
         private static long ToUnixEpochDate(DateTime date)
