@@ -140,8 +140,9 @@ namespace Gestao.Api.V1.Controllers
 
         private string CreateJwtToken(string pathPrivateKey)
         {
-            RSAParameters rsaParameters = DotNetUtilities.ToRSAParameters((RsaPrivateCrtKeyParameters)(new PemReader((TextReader)new StreamReader(pathPrivateKey)).ReadObject()
-                ?? "Certificado/Chave '" + pathPrivateKey + "' inválido(a)."));
+            RSAParameters rsaParameters = DotNetUtilities
+                .ToRSAParameters((RsaPrivateCrtKeyParameters)(new PemReader((TextReader)new StreamReader(pathPrivateKey))
+                .ReadObject() ?? "Certificado/Chave '" + pathPrivateKey + "' inválido(a)."));
             RSACryptoServiceProvider cryptoServiceProvider = new RSACryptoServiceProvider();
             cryptoServiceProvider.ImportParameters(rsaParameters);
             RsaSecurityKey key = new RsaSecurityKey((RSA)cryptoServiceProvider);
