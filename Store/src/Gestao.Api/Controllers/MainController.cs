@@ -1,8 +1,11 @@
-﻿using Gestao.Business.Interfaces;
+﻿using Flunt.Notifications;
+using Gestao.Business.Commands.Shared;
+using Gestao.Business.Interfaces;
 using Gestao.Business.Notificacoes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Gestao.Api.Controllers
@@ -71,6 +74,25 @@ namespace Gestao.Api.Controllers
         protected void NotificarErro(string mensagem)
         {
             _notificador.Handle(new Notificacao(mensagem));
+        }
+
+        protected bool ValidacaoCommand<TE>(TE entidade) where TE : CommandEntity
+        {
+            entidade.Validate();
+            if (entidade.Valid) return true;
+
+            NotificarErroCommandInvalido(entidade.Notifications);
+
+            return false;
+
+        }
+
+        protected void NotificarErroCommandInvalido(IReadOnlyCollection<Notification> notificacoes)
+        {
+            foreach (var erro in notificacoes)
+            {
+                _notificador.Handle(new Notificacao(erro.Message));
+            }
         }
     }
 }
