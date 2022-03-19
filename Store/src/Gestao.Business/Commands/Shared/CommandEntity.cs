@@ -1,4 +1,5 @@
 ﻿using Flunt.Notifications;
+using Flunt.Validations;
 using Gestao.Business.Commands.Interfaces;
 using System;
 
@@ -11,6 +12,8 @@ namespace Gestao.Business.Commands.Shared
         {
             CommandId = Guid.NewGuid();
         }
+
         public abstract void Validate();
+
     }
 }

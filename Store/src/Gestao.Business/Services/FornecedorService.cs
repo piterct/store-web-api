@@ -9,6 +9,7 @@ namespace Gestao.Business.Services
 {
     public class FornecedorService : BaseService, IFornecedorService
     {
+        private readonly INotificador _notificador;
         private readonly IFornecedorRepository _fornecedorRepository;
         private readonly IEnderecoRepository _enderecoRepository;
 
@@ -18,6 +19,7 @@ namespace Gestao.Business.Services
         {
             _fornecedorRepository = fornecedorRepository;
             _enderecoRepository = enderecoRepository;
+            _notificador = notificador;
         }
 
         public async Task<bool> Adicionar(Fornecedor fornecedor)
@@ -30,6 +32,10 @@ namespace Gestao.Business.Services
                 Notificar("Já existe um fornecedor com este documento informado");
                 return false;
             }
+
+            if (_notificador.TemNotificacao())
+                return false;
+
 
             await _fornecedorRepository.Adicionar(fornecedor);
             return true;
@@ -44,6 +50,8 @@ namespace Gestao.Business.Services
                 Notificar("Já existe um fornecedor com este documento infomado.");
                 return false;
             }
+
+
 
             await _fornecedorRepository.Atualizar(fornecedor);
             return true;
