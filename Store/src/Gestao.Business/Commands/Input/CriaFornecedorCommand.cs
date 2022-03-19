@@ -21,8 +21,9 @@ namespace Gestao.Business.Commands.Input
             AddNotifications(
           new Contract()
               .Requires()
-              .IsNotNullOrEmpty(Nome, "Nome", "O Campo {0} é obrigatorio !")
-              .IsNotNullOrEmpty(Documento, "Documento", "O Campo {0} é obrigatorio !")
+              .IsNotNullOrEmpty(Nome, "Nome", "O Campo Nome é obrigatorio !")
+              .IsNotNullOrEmpty(Documento, "Documento", "O Campo Documento é obrigatorio !")
+              .IsNotNull(Endereco, "Endereco", "O Campo Endereco é obrigatorio !")
                );
         }
     }
