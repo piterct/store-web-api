@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Gestao.Api.ViewModels;
+using Gestao.Business.Commands.Input;
 using Gestao.Business.Models;
 
 namespace Gestao.Api.Configuration
@@ -9,6 +10,7 @@ namespace Gestao.Api.Configuration
         public AutoMapperConfig()
         {
             CreateMap<Fornecedor, FornecedorViewModel>().ReverseMap();
+            CreateMap<Fornecedor, CriaFornecedorCommand>().ReverseMap();
             CreateMap<Endereco, EnderecoViewModel>().ReverseMap();
             CreateMap<ProdutoViewModel, Produto>();
 

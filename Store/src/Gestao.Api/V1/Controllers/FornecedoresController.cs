@@ -2,6 +2,7 @@
 using Gestao.Api.Controllers;
 using Gestao.Api.Extensions;
 using Gestao.Api.ViewModels;
+using Gestao.Business.Commands.Input;
 using Gestao.Business.Interfaces;
 using Gestao.Business.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -62,6 +63,19 @@ namespace Gestao.Api.V1.Controllers
             await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorViewModel));
 
             return CustomResponse(fornecedorViewModel);
+        }
+
+       
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("adicionarCommand")]
+        public async Task<ActionResult> AdicionarCommand([FromBody] CriaFornecedorCommand command)
+        {
+            if (!ValidacaoCommand(command)) return CustomResponse(command);
+
+            await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(command));
+
+            return CustomResponse(command);
         }
 
         [ClaimsAuthorize("Fornecedor", "Editar")]
