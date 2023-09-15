@@ -88,7 +88,7 @@ namespace Gestao.Api.V1.Controllers
             }
 
             NotificarErro("Usuário ou Senha incorretos");
-            return CustomResponse(loginUser);
+            return CustomResponseUnauthorized(loginUser);
         }
 
         private async Task<LoginResponseViewModel> GerarJwt(string email)
