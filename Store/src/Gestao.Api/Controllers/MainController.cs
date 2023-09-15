@@ -55,6 +55,24 @@ namespace Gestao.Api.Controllers
             });
         }
 
+        protected ActionResult CustomResponseUnauthorized(object result = null)
+        {
+            if (OperacaoValida())
+            {
+                return Ok(new
+                {
+                    success = true,
+                    data = result
+                });
+            }
+
+            return Unauthorized(new
+            {
+                success = false,
+                erros = _notificador.ObterNotificacoes().Select(n => n.Mensagem)
+            });
+        }
+
         protected ActionResult CustomResponse(ModelStateDictionary modelState)
         {
             if (!modelState.IsValid) NotificarErroModelInvalida(modelState);
