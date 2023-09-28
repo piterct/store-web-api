@@ -1,9 +1,7 @@
 using Gestao.Api.Configuration;
 using Gestao.Api.Extensions;
 using Gestao.Data.Context;
-using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
@@ -52,13 +50,13 @@ namespace Gestao.Api
 
             services.AddLoggingConfiguration(Configuration);
 
-           
-
             services.ResolveDependencies();
         }
 
+
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+        public void Configure(WebApplication app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -81,8 +79,9 @@ namespace Gestao.Api
 
             app.UseLoggingConfiguration();
 
-           
-
         }
+
+
     }
+
 }
