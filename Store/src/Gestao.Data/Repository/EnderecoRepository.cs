@@ -14,5 +14,10 @@ namespace Gestao.Data.Repository
         {
             return await Db.Enderecos.AsNoTracking().FirstOrDefaultAsync(f => f.FornecedorId == fornecedorId);
         }
+
+        public async Task<Endereco> ObterEnderecoPorFornecedor(Guid fornecedorId, Guid enderecoId)
+        {
+            return await Db.Enderecos.AsNoTracking().FirstOrDefaultAsync(f => f.FornecedorId == fornecedorId && f.Id == enderecoId);
+        }
     }
 }
