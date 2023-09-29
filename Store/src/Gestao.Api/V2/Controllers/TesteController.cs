@@ -1,5 +1,4 @@
-﻿using Elmah.Io.AspNetCore;
-using Gestao.Api.Controllers;
+﻿using Gestao.Api.Controllers;
 using Gestao.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
