@@ -33,6 +33,14 @@ namespace Gestao.Business.Services
                 return false;
             }
 
+            var enderecoFornecedor = await _enderecoRepository.ObterPorId(fornecedor.Endereco.Id);
+
+            if (enderecoFornecedor is not null)
+            {
+                Notificar("Não é possível cadastrar um endereço já cadastrado!");
+                return false;
+            }
+
             if (_notificador.TemNotificacao())
                 return false;
 
