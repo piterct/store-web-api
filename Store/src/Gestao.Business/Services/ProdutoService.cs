@@ -24,6 +24,7 @@ namespace Gestao.Business.Services
         {
             if (!ExecutarValidacao(new ProdutoValidation(), produto)) return;
 
+
             var user = _user.GetUserId();
 
             if (_produtoRepository.Buscar(p => p.Id == produto.Id).Result.Any())
